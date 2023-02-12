@@ -1,7 +1,7 @@
 import java.util.Random;
 public class Tabuleiro {
     protected Setor[][] tabuleiro;
-
+    protected char[] representacaoGrafica;
     Tabuleiro() {
         this.tabuleiro = new Setor[5][5];
         for(int i = 0; i < 5; i++){
@@ -20,47 +20,12 @@ public class Tabuleiro {
             y = gerador.nextInt(2);
         }
         this.tabuleiro[x][y].setTipo(4);
+
+        this.setRepresentacaoGrafica();
     }
 
-    public char desenharPortas(int x1, int y1, int x2, int y2, boolean ehLinha){
-        if(this.tabuleiro[x1][y1].getPassou() || this.tabuleiro[x2][y2].getPassou())
-            return '*';
-        if (ehLinha)
-            return '-';
-        return '|';
-    }
 
-    public void desenhar(){
-        System.out.println("|---|---|---|---|---|");
-
-        System.out.println("|   " + this.desenharPortas(0, 0, 0, 1, false) +"   "+this.desenharPortas(0, 1, 0, 2, false)+"   "+this.desenharPortas(0, 2, 0, 3, false)+"   "+this.desenharPortas(0, 3, 0, 4, false)+"   |");
-        System.out.println("|-"+this.desenharPortas(0, 0, 1, 0, true)+"-|-"+this.desenharPortas(0, 1, 1, 1, true)+"-|-"+this.desenharPortas(0, 2, 1, 2, true)+"-|---|---|");
-        System.out.println("|   |   |   |   |   |");
-        System.out.println("|-"+this.desenharPortas(1, 0, 2, 0, true)+"-|-"+this.desenharPortas(1, 1, 2, 1, true)+"-|-*-|-"+this.desenharPortas(1, 3, 2, 3, true)+"-|-"+this.desenharPortas(1, 4, 2, 4, true)+"-|");
-        System.out.println("|   |   * C *   "+this.desenharPortas(2, 3, 2, 4, false)+"   |");
-        System.out.println("|---|-"+this.desenharPortas(2, 1, 3, 1, true)+"-|-*-|---|-"+this.desenharPortas(2, 4, 3, 4, true)+"-|");
-        System.out.println("|   "+this.desenharPortas(3, 0, 3, 1, false)+"   |   |   "+this.desenharPortas(3, 3, 3, 4, false)+"   |");
-        System.out.println("|-"+this.desenharPortas(3, 0, 4, 0, true)+"-|---|---|-"+this.desenharPortas(3, 3, 4, 3, true)+"-|---|");
-        System.out.println("|   "+this.desenharPortas(4, 0, 4, 1, false)+"   "+this.desenharPortas(4, 1, 4, 2, false)+"   "+this.desenharPortas(4, 2, 4, 3, false)+"   "+this.desenharPortas(4, 3, 4, 4, false)+"   |");
-        
-        System.out.println("|---|---|---|---|---|");
-    }
-
-    public void desenhar(int x){
-    //     for(int j = 0; j < 11;j++){
-    //         if(j %2 == 0){
-    //             for(int i = 0; i < 5; i++){
-    //                 System.out.print("|---");
-    //             }
-    //             System.out.println("|");
-    //         }else{
-    //             for(int i = 0; i < 5; i++){
-    //                 System.out.print("|   ");
-    //             }
-    //             System.out.println("|");
-    //         }
-    //     }
-
+    public void setRepresentacaoGrafica(){
     String tmp = "";
     for(int i = 0; i < 11; i++){
         for(int j = 0; j < 21; j++){
@@ -73,13 +38,15 @@ public class Tabuleiro {
         }
         tmp = tmp.concat("\n");
     }
-    char[] tmp2 = tmp.toCharArray();
-    tmp2[6*21+6+10]= '*';
-    tmp2[4*21+4+10]= '*';
-    tmp2[5*21+5+8]= '*';
-    tmp2[5*21+5+10]= 'C';
-    tmp2[5*21+5+12]= '*';
-    tmp2[24+44*2+4*3] = 'P';
-    System.out.print(tmp2);
+    this.representacaoGrafica = tmp.toCharArray();
+    this.representacaoGrafica[6*21+6+10]= '*';
+    this.representacaoGrafica[4*21+4+10]= '*';
+    this.representacaoGrafica[5*21+5+8]= '*';
+    this.representacaoGrafica[5*21+5+10]= 'C';
+    this.representacaoGrafica[5*21+5+12]= '*';
+    }
+
+    public void desenhar(){
+        System.out.println(this.representacaoGrafica);
     }
 }
