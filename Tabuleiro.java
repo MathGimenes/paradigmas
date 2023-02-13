@@ -2,6 +2,7 @@ import java.util.Random;
 public class Tabuleiro {
     protected Setor[][] tabuleiro;
     protected char[] representacaoGrafica;
+    
     Tabuleiro() {
         this.tabuleiro = new Setor[5][5];
         for(int i = 0; i < 5; i++){
@@ -24,6 +25,10 @@ public class Tabuleiro {
         this.setRepresentacaoGrafica();
     }
 
+    public Setor getSetor(int i, int j){
+        return this.tabuleiro[i][j];
+    }
+
 
     public void setRepresentacaoGrafica(){
     String tmp = "";
@@ -44,6 +49,58 @@ public class Tabuleiro {
     this.representacaoGrafica[5*21+5+8]= '*';
     this.representacaoGrafica[5*21+5+10]= 'C';
     this.representacaoGrafica[5*21+5+12]= '*';
+    }
+
+    
+    public void atualizarTabela(int i, int j, Player P){
+        int x = 1 + 2 * i;
+        int y = 2 + 4 * j, idx = 0;
+
+        idx = x * 21 + x + y;
+        if(!(i == 2 && j == 2)){
+            if(this.getSetor(i, j).getPlayers() == 2)
+                this.representacaoGrafica[idx] = 'P';
+            else if(P instanceof PlayerSimples)
+                this.representacaoGrafica[idx] = '1';
+            else
+                this.representacaoGrafica[idx] = '2';
+            }
+
+        if(this.tabuleiro[i][j].getCima()){
+            idx = (x - 1) * 21 + (x - 1) + y;
+            this.representacaoGrafica[idx] = '*';
+        }
+        if(this.tabuleiro[i][j].getEsq()){
+            idx = x * 21 + x + y - 2;
+            this.representacaoGrafica[idx] = '*';
+        }
+        if(this.tabuleiro[i][j].getBaixo()){
+            idx = (x + 1) * 21 + (x + 1) + y;
+            this.representacaoGrafica[idx] = '*';
+        }
+        if(this.tabuleiro[i][j].getDir()){
+            idx = x * 21 + x + y + 2;
+            this.representacaoGrafica[idx] = '*';
+        }
+    }
+
+    public void apagarRastro(int i, int j){
+        int x = 1 + 2 * i;
+        int y = 2 + 4 * j;
+        if(!(i == 2 && j == 2)){
+            this.representacaoGrafica[x * 21 + x + y] = ' ';
+        }
+    }
+
+    public void apagarRastro(int i, int j, Player P){
+        int x = 1 + 2 * i;
+        int y = 2 + 4 * j;
+        if(!(i == 2 && j == 2)){
+            if (P instanceof PlayerSimples)
+                this.representacaoGrafica[x * 21 + x + y] = '2';
+            else
+                this.representacaoGrafica[x * 21 + x + y] = '1';
+        }
     }
 
     public void desenhar(){

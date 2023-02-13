@@ -23,6 +23,10 @@ public class Inimigo implements Personagem{
         this.def = stat;
     }
 
+    public void dano(int x){
+        this.def = this.def - x;
+    }
+
     public void atacar(){
 
     }
