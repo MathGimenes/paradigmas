@@ -12,6 +12,7 @@ public class Tabuleiro {
         }
 
         this.tabuleiro[2][2].setTipo(3);
+        this.tabuleiro[2][2].setPassou(false);
         
         Random gerador = new Random();
         int x = gerador.nextInt(2);

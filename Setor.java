@@ -1,7 +1,7 @@
 import java.util.Random;
 public class Setor {
     /* 0-normal, 1-oculto, 2-privado, 3-C, 4-X */
-    protected int tipo, players;
+    protected int tipo, players, numeroInimigos;
     /* true porta, false parede */
     protected boolean cima, baixo, esq, dir;
     /* passou 0-n, 1-s */
@@ -135,6 +135,10 @@ public class Setor {
         return this.players;
     }
 
+    public int getNumeroInimigos(){
+        return this.numeroInimigos;
+    }
+
 
     public void setTipo(){
         Random gerador = new Random();
@@ -151,9 +155,9 @@ public class Setor {
     }
 
     public void setInimigo(){
-        this.setPassou(true);
         Random gerador = new Random();
         int numeroInimigos = gerador.nextInt(2) + 1;
+        this.numeroInimigos = numeroInimigos;
         this.inimigos = new Inimigo[numeroInimigos];
         
         for(int i = 0; i < numeroInimigos; i++){
