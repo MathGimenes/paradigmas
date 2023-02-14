@@ -18,7 +18,7 @@ public class Inimigo implements Personagem{
     
     public void setAtkDef(){
         Random gerador = new Random();
-        int stat = gerador.nextInt(2) + 1;
+        int stat = gerador.nextInt(3) + 1;
         this.atk = stat;
         this.def = stat;
     }

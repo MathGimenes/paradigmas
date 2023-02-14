@@ -1,9 +1,14 @@
-import java.util.Random;
+import java.util.*;
 public class Tabuleiro {
     protected Setor[][] tabuleiro;
     protected char[] representacaoGrafica;
     
-    Tabuleiro() {
+    /* 0-simples 1-suporte */
+    protected Player[] ps;
+    
+    Tabuleiro(Player[] ps) {
+        this.ps = new Player[2];
+        this.ps = ps;
         this.tabuleiro = new Setor[5][5];
         for(int i = 0; i < 5; i++){
             for(int j = 0; j < 5; j++){
@@ -15,11 +20,11 @@ public class Tabuleiro {
         this.tabuleiro[2][2].setPassou(false);
         
         Random gerador = new Random();
-        int x = gerador.nextInt(2);
-        int y = gerador.nextInt(2);
+        int x = gerador.nextInt(5);
+        int y = gerador.nextInt(5);
         while (x == 2 && y == 2){
-            x = gerador.nextInt(2);
-            y = gerador.nextInt(2);
+            x = gerador.nextInt(5);
+            y = gerador.nextInt(5);
         }
         this.tabuleiro[x][y].setTipo(4);
 
@@ -106,5 +111,48 @@ public class Tabuleiro {
 
     public void desenhar(){
         System.out.println(this.representacaoGrafica);
+    }
+
+    public void jogar(Setor setor, Player P, Scanner sc, Banner banner){
+        System.out.println("Escolha uma opcao:");
+        System.out.println("1- Atacar");
+        int opcao = 2;
+        
+        if (setor.getTipo() != 2){
+            System.out.println(opcao + "- Procurar");
+            opcao++;
+        }
+        if(P instanceof PlayerSuporte){
+            System.out.println(opcao + "- Recuperar defesa");
+        }
+
+        String tmp = sc.next();
+        boolean flag = true;
+        
+        while(flag){
+            if(tmp.compareTo("1") == 0){
+                P.atacar();
+                flag = false;
+            }else if(setor.getTipo() == 0 && tmp.compareTo("2") == 0){
+                P.procurar();
+                flag = false;
+            }else if(P instanceof PlayerSuporte && tmp.compareTo("2") == 0){
+                PlayerSuporte Ptmp = (PlayerSuporte) P;
+                Ptmp.recuperarDefesa(ps, sc, banner);
+                flag = false;
+            }else if(tmp.compareTo("3") == 0){
+                PlayerSuporte Ptmp = (PlayerSuporte) P;
+                Ptmp.recuperarDefesa(ps, sc, banner);
+                flag = false;
+            }else{
+                flag = true;
+                System.out.println("Opcao inválida, escolha novamente.");
+                sc.reset();
+                sc.next();
+            }
+        }  
+    
+    
+    
     }
 }

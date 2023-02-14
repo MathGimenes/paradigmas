@@ -65,14 +65,128 @@ public class Banner {
         }
     }
 
-    public void atualizarInimigos(Setor setor, Player P){
+    public void atualizarSetor(Player P, Tabuleiro tab){
         if(P instanceof PlayerSimples){
-            int primeiro = 2*32+2+2;
-            this.banner[primeiro] = 'T';
+            int idx = 4 * 32 + 4;
+            if(tab.getSetor(P.getX(), P.getY()).getEsq())
+                this.banner[idx] = '*';
+            else
+                this.banner[idx] = '|';
+        
+            idx = 32 + 1 +7;
+
+            if(tab.getSetor(P.getX(), P.getY()).getCima())
+                this.banner[idx] = '*';
+            else
+                this.banner[idx] = '-';
+
+            idx = 4* 32 + 4 + 14;
+
+            if(tab.getSetor(P.getX(), P.getY()).getDir())
+                this.banner[idx] = '*';
+            else
+                this.banner[idx] = '|';
+
+            idx = 7 * 32 + 7 + 7;
+
+            if(tab.getSetor(P.getX(), P.getY()).getBaixo())
+                this.banner[idx] = '*';
+            else
+                this.banner[idx] = '-';
+
+
         }else{
-            int primeiro = 2*32+2+2+16;
-            this.banner[primeiro] = 'T';
+
+            int idx = 4 * 32 + 4 + 16;
+            if(tab.getSetor(P.getX(), P.getY()).getEsq())
+                this.banner[idx] = '*';
+            else
+                this.banner[idx] = '|';
+        
+            idx = 32 + 1 + 7 + 16;
+
+            if(tab.getSetor(P.getX(), P.getY()).getCima())
+                this.banner[idx] = '*';
+            else
+                this.banner[idx] = '-';
+
+            idx = 4* 32 + 4 + 14 + 16;
+
+            if(tab.getSetor(P.getX(), P.getY()).getDir())
+                this.banner[idx] = '*';
+            else
+                this.banner[idx] = '|';
+
+            idx = 7 * 32 + 7 + 7 + 16;
+
+            if(tab.getSetor(P.getX(), P.getY()).getBaixo())
+                this.banner[idx] = '*';
+            else
+                this.banner[idx] = '-';
+
+        }
+    }
+
+    public void apagarInimigos(Player P){
+        if(P instanceof PlayerSimples){
+            int idx = 2*32+2+2;
+            for(int i = 0; i < 3; i++){
+                this.banner[idx++] = ' ';
+                this.banner[idx++] = ' ';
+                this.banner[idx] = ' ';
+                idx+=2;
+                
+            }
+        }else{
+            int idx = 2*32+2+2+16;
+            for(int i = 0; i < 3; i++){
+                this.banner[idx++] = ' ';
+                this.banner[idx++] = ' ';
+                this.banner[idx] = ' ';
+                idx+=2;
+                
+            }
+        }
+    }
+
+    public void atualizarInimigos(Setor setor, Player P){
+
+        if(P instanceof PlayerSimples){
+            this.apagarInimigos(P);
+            int idx = 2*32+2+2;
+            int numeroInimigos = setor.getNumeroInimigos();
+            for(int i = 0; i < numeroInimigos; i++){
+                Integer atk = setor.getInimigo(i).getAtk(), def = setor.getInimigo(i).getDef() ;
+                this.banner[idx++] = atk.toString().toCharArray()[0];
+                this.banner[idx++] = '/';
+                this.banner[idx] = def.toString().toCharArray()[0];
+                idx+=2;
+                
+            }
+        }else{
+            this.apagarInimigos(P);
+            int idx = 2*32+2+2+16;
+            int numeroInimigos = setor.getNumeroInimigos();
+            for(int i = 0; i < numeroInimigos; i++){
+                Integer atk = setor.getInimigo(i).getAtk(), def = setor.getInimigo(i).getDef() ;
+                this.banner[idx++] = atk.toString().toCharArray()[0];
+                this.banner[idx++] = '/';
+                this.banner[idx] = def.toString().toCharArray()[0];
+                idx+=2;
+                
+            }
         }
 
+    }
+
+    public void atualizarDefPlayer(Player P){
+        if(P instanceof PlayerSimples){
+            Integer def = P.getDef();
+            this.banner[200 + 2] = def.toString().toCharArray()[0];
+
+        }else{
+            Integer def = P.getDef();
+            this.banner[200 + 18] = def.toString().toCharArray()[0];
+        }
     }
 }

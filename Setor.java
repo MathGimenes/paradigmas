@@ -139,10 +139,14 @@ public class Setor {
         return this.numeroInimigos;
     }
 
+    public Inimigo getInimigo(int idx){
+        return this.inimigos[idx];
+    }
+
 
     public void setTipo(){
         Random gerador = new Random();
-        this.tipo = gerador.nextInt(2);
+        this.tipo = gerador.nextInt(3);
     }
 
     public void setTipo(int x){
@@ -156,7 +160,7 @@ public class Setor {
 
     public void setInimigo(){
         Random gerador = new Random();
-        int numeroInimigos = gerador.nextInt(2) + 1;
+        int numeroInimigos = gerador.nextInt(3) + 1;
         this.numeroInimigos = numeroInimigos;
         this.inimigos = new Inimigo[numeroInimigos];
         

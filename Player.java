@@ -24,8 +24,15 @@ public abstract class Player implements Personagem{
     }
 
     public abstract void setAtk();
+    
+    public void setAtk(int atk){
+        this.atk = atk;
+    }
 
     public abstract void setDef();
+    public void setDef(int def){
+        this.def = def;
+    }
 
     public void setAcoes(){
         this.acoes = 2;
