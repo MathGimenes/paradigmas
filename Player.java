@@ -1,11 +1,10 @@
 import java.util.*;
 public abstract class Player implements Personagem{
-    protected int atk, def, x, y, acoes;
+    protected int atk, def, x, y;
     protected boolean atacado;
 
     Player(){
         this.setXY();
-        this.setAcoes();
         this.setAtacado(false);
     }
 
@@ -44,9 +43,6 @@ public abstract class Player implements Personagem{
         this.atacado = estado;
     }
 
-    public void setAcoes(){
-        this.acoes = 2;
-    }
 
     public void setXY(){
         this.x = 2;
