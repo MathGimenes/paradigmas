@@ -151,7 +151,7 @@ public class Banner {
 
     public void atualizarInimigos(Setor setor, Player P){
 
-        if(P instanceof PlayerSimples){
+        if(P instanceof PlayerSimples || setor.getPlayers() == 2){
             this.apagarInimigos(P);
             int idx = 2*32+2+2;
             int numeroInimigos = setor.getNumeroInimigos();
@@ -163,7 +163,8 @@ public class Banner {
                 idx+=2;
                 
             }
-        }else{
+        }
+        if(P instanceof PlayerSuporte || setor.getPlayers() == 2){
             this.apagarInimigos(P);
             int idx = 2*32+2+2+16;
             int numeroInimigos = setor.getNumeroInimigos();
@@ -189,4 +190,5 @@ public class Banner {
             this.banner[200 + 18] = def.toString().toCharArray()[0];
         }
     }
+
 }

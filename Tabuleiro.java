@@ -35,6 +35,10 @@ public class Tabuleiro {
         return this.tabuleiro[i][j];
     }
 
+    public Player getPlayer(int idx){
+        return this.ps[idx];
+    }
+
 
     public void setRepresentacaoGrafica(){
     String tmp = "";
@@ -110,13 +114,18 @@ public class Tabuleiro {
     }
 
     public void desenhar(){
+        System.out.print("\033[H\033[2J");  
+        System.out.flush(); 
         System.out.println(this.representacaoGrafica);
     }
 
-    public void jogar(Setor setor, Player P, Scanner sc, Banner banner){
-        System.out.println("Escolha uma opcao:");
+    public boolean jogar(Setor setor, Player P, Scanner sc, Banner banner){
+        System.out.println("Escolha uma opcao:" + setor.getTipo());
         System.out.println("1- Atacar");
         int opcao = 2;
+
+        if(setor.getTipo() == 4)
+            return true;
         
         if (setor.getTipo() != 2){
             System.out.println(opcao + "- Procurar");
@@ -131,26 +140,30 @@ public class Tabuleiro {
         
         while(flag){
             if(tmp.compareTo("1") == 0){
-                P.atacar();
-                flag = false;
-            }else if(setor.getTipo() == 0 && tmp.compareTo("2") == 0){
-                P.procurar();
-                flag = false;
-            }else if(P instanceof PlayerSuporte && tmp.compareTo("2") == 0){
-                PlayerSuporte Ptmp = (PlayerSuporte) P;
-                Ptmp.recuperarDefesa(ps, sc, banner);
+                P.atacar(setor, sc);
+                banner.apagarInimigos(P);
+                banner.atualizarInimigos(setor, P);
+                banner.desenhar();
                 flag = false;
             }else if(tmp.compareTo("3") == 0){
                 PlayerSuporte Ptmp = (PlayerSuporte) P;
                 Ptmp.recuperarDefesa(ps, sc, banner);
                 flag = false;
+            }else if(setor.getTipo() == 0 || setor.getTipo() == 1){
+                P.procurar(setor, banner);
+                flag = false;
+            }else if(setor.getTipo() == 2){
+                PlayerSuporte Ptmp = (PlayerSuporte) P;
+                Ptmp.recuperarDefesa(ps, sc, banner);
+                flag = false;
             }else{
                 flag = true;
-                System.out.println("Opcao inválida, escolha novamente.");
+                System.out.println("Opcao inválida, escolha novamente.(jogar)");
                 sc.reset();
                 sc.next();
             }
         }  
+        return false;
     
     
     

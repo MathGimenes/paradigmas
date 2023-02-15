@@ -27,8 +27,41 @@ public class Inimigo implements Personagem{
         this.def = this.def - x;
     }
 
-    public void atacar(){
+    public boolean atacar(Setor setor, Tabuleiro tab, Player P){
+        System.out.println("atacar");
+        int numeroPlayers = setor.getPlayers();
+        Random gerador = new Random();
+        int player = gerador.nextInt(2);
+        boolean vaiAtacar = (gerador.nextInt(6) + 1) % 2 == 0;
+        if (numeroPlayers == 2){
 
+            if(!tab.getPlayer(player).getAtacado() && vaiAtacar){
+                tab.getPlayer(player).dano(this.atk);
+                tab.getPlayer(player).setAtacado(true);
+                if(tab.getPlayer(player).getDef() <= 0){
+                    return true;
+                }
+            }else{
+                player = (player == 1) ? 2 : 1;
+                if(!tab.getPlayer(player).getAtacado() && vaiAtacar){
+                    tab.getPlayer(player).dano(this.atk);
+                    tab.getPlayer(player).setAtacado(true);
+                    if(tab.getPlayer(player).getDef() <= 0){
+                        return true;
+                    }
+                }
+            }
+        }else if (!P.getAtacado() && vaiAtacar){
+            P.dano(this.atk);
+            P.setAtacado(true);
+            if(P.getDef() <= 0){
+                System.out.println("Morreu");
+                return true;
+            }
+        }
+        return false;
     }
+
+
     
 }

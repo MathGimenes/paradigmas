@@ -139,6 +139,10 @@ public class Setor {
         return this.numeroInimigos;
     }
 
+    public Inimigo[] getInimigo(){
+        return this.inimigos;
+    }
+
     public Inimigo getInimigo(int idx){
         return this.inimigos[idx];
     }
@@ -169,6 +173,15 @@ public class Setor {
         }
     }
 
+    public void setNumeroInimigos(int num){
+        this.numeroInimigos = num;
+    }
+
+    public void setInimigo(Inimigo[] novo){
+        this.inimigos = novo;
+    
+    }
+
     public void setPlayers(int x){
         this.players = x;
     }
@@ -181,6 +194,19 @@ public class Setor {
         else
             tmp--;
         this.setPlayers(tmp);
+    }
+
+    public void removerInimigo(int inimigo, int numeroInimigos, Setor setor){
+        Inimigo[] tmp = new Inimigo[numeroInimigos - 1];
+        for(int i = 0, j = 0; i < numeroInimigos; i++){
+            if (!(inimigo == i)){
+                tmp[j] = setor.getInimigo(i);
+                j++;
+            }
+        }
+
+        setor.setInimigo(tmp);
+        setor.setNumeroInimigos(numeroInimigos - 1);
     }
         
 }
