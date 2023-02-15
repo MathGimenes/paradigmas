@@ -4,7 +4,8 @@ public abstract class Player implements Personagem{
     protected boolean atacado;
 
     Player(){
-        this.setXY();
+        this.setX();
+        this.setY();
         this.setAtacado(false);
     }
 
@@ -44,9 +45,20 @@ public abstract class Player implements Personagem{
     }
 
 
-    public void setXY(){
+    public void setX(){
         this.x = 2;
+    }
+    
+    public void setX(int x){
+        this.x = this.x + x;
+    }
+
+    public void setY(){
         this.y = 2;
+    }
+
+    public void setY(int y){
+        this.y = this.y + y;
     }
 
     public boolean movimentar(Player P, String opcao, Tabuleiro tab){
@@ -64,7 +76,7 @@ public abstract class Player implements Personagem{
                 return false;
             }
             else{
-                this.x--;
+                this.setX(-1);;
                 if(tab.getSetor(x, y).getPlayers() != 1)
                     tab.apagarRastro(x, y, P);
                 tab.getSetor(x, y).updatePlayers(false);
@@ -78,7 +90,7 @@ public abstract class Player implements Personagem{
                 return false;
             }
             else{
-                this.y--;
+                this.setY(-1);;
                 if(tab.getSetor(x, y).getPlayers() != 1)
                     tab.apagarRastro(x, y, P);
                 tab.getSetor(x, y).updatePlayers(false);
@@ -92,7 +104,7 @@ public abstract class Player implements Personagem{
                 return false;
             }
             else{
-                this.x++;
+                this.setX(1);;
                 if(tab.getSetor(x, y).getPlayers() != 1)
                     tab.apagarRastro(x, y, P);
                 tab.getSetor(x, y).updatePlayers(false);
@@ -107,7 +119,7 @@ public abstract class Player implements Personagem{
                 return false;
             }
             else{
-                this.y++;
+                this.setY(1);;
                 if(tab.getSetor(x, y).getPlayers() != 1)
                     tab.apagarRastro(x, y, P);
                 tab.getSetor(x, y).updatePlayers(false);
@@ -141,7 +153,7 @@ public abstract class Player implements Personagem{
             }else{
                 setor.getInimigo(opcao - 1).dano(this.atk);
                 if (setor.getInimigo(opcao - 1).getDef() <= 0){
-                    setor.removerInimigo((opcao - 1), numeroInimigos, setor);
+                    setor.removerInimigo((opcao - 1), numeroInimigos);
                 }
 
                 flag = false;
@@ -168,19 +180,15 @@ public abstract class Player implements Personagem{
                 Inimigo tmp = setor.getInimigo(i);
                 tmp.dano(1);
                 if (tmp.getDef() <= 0){
-                    setor.removerInimigo(i, numeroInimigos, setor);
+                    setor.removerInimigo(i, numeroInimigos);
                     numeroInimigos--;
                 }
                 banner.atualizarInimigos(setor, this);
-
-
-
             }
             banner.desenhar();
 
         }else{
             System.out.println("Nada encontrado");
-
         }
         
     }

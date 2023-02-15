@@ -7,8 +7,30 @@ public class Tabuleiro {
     protected Player[] ps;
     
     Tabuleiro(Player[] ps) {
+        this.setPlayer(ps);
+        this.setSetor();
+        
+        this.setRepresentacaoGrafica();
+    }
+
+    public Setor getSetor(int i, int j){
+        return this.tabuleiro[i][j];
+    }
+
+    public Player getPlayer(int idx){
+        return this.ps[idx];
+    }
+
+    public char[] getRepresentacaoGrafica(){
+        return this.representacaoGrafica;
+    }
+
+    public void setPlayer(Player[] ps){
         this.ps = new Player[2];
         this.ps = ps;
+    }
+
+    public void setSetor(){
         this.tabuleiro = new Setor[5][5];
         for(int i = 0; i < 5; i++){
             for(int j = 0; j < 5; j++){
@@ -28,17 +50,8 @@ public class Tabuleiro {
         }
         this.tabuleiro[x][y].setTipo(4);
 
-        this.setRepresentacaoGrafica();
-    }
 
-    public Setor getSetor(int i, int j){
-        return this.tabuleiro[i][j];
     }
-
-    public Player getPlayer(int idx){
-        return this.ps[idx];
-    }
-
 
     public void setRepresentacaoGrafica(){
     String tmp = "";

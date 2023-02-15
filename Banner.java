@@ -6,6 +6,10 @@ public class Banner {
 
     }
 
+    public char[] getBanner(){
+        return this.banner;
+    }
+
     public void setBanner(){
         String tmp = "";
         tmp = tmp.concat("  Setor (3,3)   ");

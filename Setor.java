@@ -1,4 +1,4 @@
-import java.util.Random;
+import java.util.*;
 public class Setor {
     /* 0-normal, 1-oculto, 2-privado, 3-C, 4-X */
     protected int tipo, players, numeroInimigos;
@@ -7,7 +7,7 @@ public class Setor {
     /* passou 0-n, 1-s */
     protected boolean passou;
 
-    protected Inimigo[] inimigos;
+    protected ArrayList<Inimigo> inimigos;
 
     Setor(int i, int j){
         this.setTipo();
@@ -19,87 +19,87 @@ public class Setor {
             case 0:
             case 15:
             case 18:
-                this.baixo = true;
-                this.dir = true;
+                this.setBaixo(true);
+                this.setDir(true);
                 break;
             
             case 1:
             case 2:
-                this.esq = true;
-                this.baixo = true;
-                this.dir = true;
+                this.setEsq(true);
+                this.setBaixo(true);
+                this.setDir(true);
                 break;
             
             case 3:
             case 21:
             case 22:
-                this.esq = true;
-                this.dir = true;
+                this.setEsq(true);
+                this.setDir(true);
                 break;
 
             case 4:
             case 24:
-                this.esq = true;
+                this.setEsq(true);
                 break;
 
             case 5:
             case 6:
             case 7:
-                this.cima = true;
-                this.baixo = true;
+                this.setCima(true);
+                this.setBaixo(true);
                 break;
             
             case 8:
             case 9:
-                this.baixo = true;
+                this.setBaixo(true);
                 break;
             
             case 10:
             case 17:
-                this.cima = true;
+                this.setCima(true);
                 break;
             
             case 11:
             
-                this.cima = true;
-                this.dir = true;
-                this.baixo = true;
+                this.setCima(true);
+                this.setDir(true);
+                this.setBaixo(true);
                 break;
 
             case 12:
             
-                this.cima = true;
-                this.dir = true;
-                this.baixo = true;
-                this.esq = true;
+                this.setCima(true);
+                this.setDir(true);
+                this.setBaixo(true);
+                this.setEsq(true);
                 break;
             
             case 13:
             case 23:
 
-                this.cima = true;
-                this.esq = true;
-                this.dir = true;
+                this.setCima(true);
+                this.setEsq(true);
+                this.setDir(true);
                 break;
 
             case 14:
                 
-                this.cima = true;
-                this.esq = true;
-                this.baixo = true;
+                this.setCima(true);
+                this.setEsq(true);
+                this.setBaixo(true);
                 break;
 
             case 16:
             case 19:
 
-                this.cima = true;
-                this.esq = true;
+                this.setCima(true);
+                this.setEsq(true);
                 break;
 
             case 20:
 
-                this.cima = true;
-                this.dir = true;
+                this.setCima(true);
+                this.setDir(true);
                 break;
                     
             }   
@@ -111,8 +111,12 @@ public class Setor {
         return this.tipo;
     }
 
-    public boolean getPassou(){
-        return this.passou;
+    public int getPlayers(){
+        return this.players;
+    }
+
+    public int getNumeroInimigos(){
+        return this.numeroInimigos;
     }
 
     public boolean getCima(){
@@ -131,20 +135,17 @@ public class Setor {
         return this.dir;
     }
 
-    public int getPlayers(){
-        return this.players;
+
+    public boolean getPassou(){
+        return this.passou;
     }
 
-    public int getNumeroInimigos(){
-        return this.numeroInimigos;
-    }
-
-    public Inimigo[] getInimigo(){
+    public ArrayList<Inimigo> getInimigo(){
         return this.inimigos;
     }
 
     public Inimigo getInimigo(int idx){
-        return this.inimigos[idx];
+        return this.inimigos.get(idx);
     }
 
 
@@ -166,10 +167,10 @@ public class Setor {
         Random gerador = new Random();
         int numeroInimigos = gerador.nextInt(3) + 1;
         this.numeroInimigos = numeroInimigos;
-        this.inimigos = new Inimigo[numeroInimigos];
+        this.inimigos = new ArrayList<Inimigo>(numeroInimigos);
         
         for(int i = 0; i < numeroInimigos; i++){
-            inimigos[i] = new Inimigo();
+            this.inimigos.add(new Inimigo());
         }
     }
 
@@ -177,9 +178,25 @@ public class Setor {
         this.numeroInimigos = num;
     }
 
-    public void setInimigo(Inimigo[] novo){
+    public void setInimigo(ArrayList<Inimigo> novo){
         this.inimigos = novo;
     
+    }
+
+    public void setCima(boolean cima){
+        this.cima = cima;
+    }
+
+    public void setBaixo(boolean baixo){
+        this.baixo = baixo;
+    }
+
+    public void setEsq(boolean esq){
+        this.esq = esq;
+    }
+
+    public void setDir(boolean dir){
+        this.dir = dir;
     }
 
     public void setPlayers(int x){
@@ -196,17 +213,9 @@ public class Setor {
         this.setPlayers(tmp);
     }
 
-    public void removerInimigo(int inimigo, int numeroInimigos, Setor setor){
-        Inimigo[] tmp = new Inimigo[numeroInimigos - 1];
-        for(int i = 0, j = 0; i < numeroInimigos; i++){
-            if (!(inimigo == i)){
-                tmp[j] = setor.getInimigo(i);
-                j++;
-            }
-        }
-
-        setor.setInimigo(tmp);
-        setor.setNumeroInimigos(numeroInimigos - 1);
+    public void removerInimigo(int inimigo, int numeroInimigos){
+        this.inimigos.remove(inimigo);
+        this.setNumeroInimigos(numeroInimigos - 1);
     }
         
 }

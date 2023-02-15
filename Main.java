@@ -1,7 +1,6 @@
 
 import java.util.*;
-import java.lang.Thread;  
-import java.io.*;  
+import java.lang.Thread;
 public class Main{
     public static void main(String[] args){
         Player[] ps = new Player[2];
